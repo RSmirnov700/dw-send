@@ -2,6 +2,8 @@ package com.dyn.api.dw;
 
 import com.dyn.api.dw.config.ApplicationConfig;
 import com.dyn.api.dw.health.SMTPConfigHealthCheck;
+import com.dyn.api.dw.resources.SendMessageResource;
+
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -27,6 +29,10 @@ public class ServerMainApp extends Application<ApplicationConfig> {
         final SMTPConfigHealthCheck smtpCheck =
                 new SMTPConfigHealthCheck(applicationConfig.getSmtpHost());
         environment.healthChecks().register("smtp", smtpCheck);
+        
+        final SendMessageResource resource = new SendMessageResource();
+        
+        environment.jersey().register(resource);
     }
 
     public static void main(String[] args) throws Exception {
