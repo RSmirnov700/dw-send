@@ -1,7 +1,7 @@
-package com.dyn.api.dw.model;
+package com.dyn.api.dw.api;
 
 
-public class ResponceMessage {
+public class ResponseMessage {
 	
 	private int status;
 	

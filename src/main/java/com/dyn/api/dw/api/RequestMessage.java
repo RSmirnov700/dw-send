@@ -1,4 +1,4 @@
-package com.dyn.api.dw.model;
+package com.dyn.api.dw.api;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
