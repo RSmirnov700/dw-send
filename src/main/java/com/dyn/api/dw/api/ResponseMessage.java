@@ -1,6 +1,8 @@
 package com.dyn.api.dw.api;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
 
+@JsonRootName ("response")
 public class ResponseMessage {
 	
 	public ResponseMessage() {

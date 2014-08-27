@@ -1,12 +1,13 @@
 package com.dyn.api.dw;
 
-import com.dyn.api.dw.config.ApplicationConfig;
-import com.dyn.api.dw.health.SMTPConfigHealthCheck;
-import com.dyn.api.dw.resources.SendMessageResource;
-
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+
+import com.dyn.api.dw.config.ApplicationConfig;
+import com.dyn.api.dw.health.SMTPConfigHealthCheck;
+import com.dyn.api.dw.resources.SendMessageResource;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 /**
  * Created by rsmirnov on 8/27/14.
@@ -33,6 +34,8 @@ public class ServerMainApp extends Application<ApplicationConfig> {
         final SendMessageResource resource = new SendMessageResource();
         
         environment.jersey().register(resource);
+        
+        environment.getObjectMapper().configure(SerializationFeature.WRAP_ROOT_VALUE, true);
     }
 
     public static void main(String[] args) throws Exception {
