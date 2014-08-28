@@ -1,15 +1,20 @@
 package com.dyn.api.dw.health;
 
 import com.codahale.metrics.health.HealthCheck;
+import com.dyn.api.dw.guice.modules.NamedModuleProvider;
 import com.google.common.base.Strings;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-/**
- * Created by rsmirnov on 8/27/14.
- */
+import javax.annotation.Nullable;
+
 public class SMTPConfigHealthCheck extends HealthCheck {
     private final String smtpHost;
 
-    public SMTPConfigHealthCheck(String smtpHost) {
+    @Inject
+    public SMTPConfigHealthCheck(@Named(NamedModuleProvider.SMTP_HOST)String smtpHost) {
         this.smtpHost = smtpHost;
     }
 
