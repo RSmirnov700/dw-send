@@ -3,30 +3,23 @@ package com.dyn.api.dw.api;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class RequestMessage {
 
 	@NotEmpty
-	@JsonProperty(required = true, value = "apikey")
 	private final String apiKey;
 
 	@NotEmpty
 	@Email
-	@JsonProperty(required = true)
 	private final String from;
 
 	@NotEmpty
 	@Email
-	@JsonProperty(required = true)
 	private final String to;
 
 	@NotEmpty
-	@JsonProperty(required = true)
 	private final String subject;
 
 	@Email
-	@JsonProperty("replyto")
 	private final String replyTo;
 
 	@Email
@@ -38,10 +31,8 @@ public class RequestMessage {
 	@Email
 	private final String sender;
 
-	@JsonProperty("messageid")
 	private final String messageId;
 
-	@JsonProperty("inreplyto")
 	private final String inReplyTo;
 
 	private final String references;
@@ -50,7 +41,6 @@ public class RequestMessage {
 
 	private final String keywords;
 
-	@JsonProperty("replyby")
 	private final String replyBy;
 
 	private final String importance;
@@ -59,56 +49,48 @@ public class RequestMessage {
 
 	private final String sensitivity;
 
-	@JsonProperty("resent-date")
 	private final String resentDate;
 
-	@JsonProperty("resent-from")
 	private final String resentFrom;
 
-	@JsonProperty("resent-sender")
 	private final String resentSender;
 
-	@JsonProperty("resent-replyto")
 	private final String resentReplyTo;
 
-	@JsonProperty("resent-messageid")
 	private final String resentMessageId;
 
-	@JsonProperty("bodytext")
 	private final String bodyText;
 
-	@JsonProperty("bodyhtml")
 	private final String bodyHtml;
 
-	@JsonProperty("xheaders")
 	private final String xHeaders;
 
-	public RequestMessage(RequestMessageBuilder builder) {
-		apiKey = builder.getApiKey();
-		from = builder.getFrom();
-		to = builder.getTo();
-		subject = builder.getSubject();
-		replyTo = builder.getReplyTo();
-		cc = builder.getCc();
-		bcc = builder.getBcc();
-		sender = builder.getSender();
-		messageId = builder.getMessageId();
-		inReplyTo = builder.getInReplyTo();
-		references = builder.getReferences();
-		comments = builder.getComments();
-		keywords = builder.getKeywords();
-		replyBy = builder.getReplyBy();
-		importance = builder.getImportance();
-		priority = builder.getPriority();
-		sensitivity = builder.getSensitivity();
-		resentDate = builder.getResentDate();
-		resentFrom = builder.getResentFrom();
-		resentSender = builder.getResentSender();
-		resentReplyTo = builder.getResentReplyTo();
-		resentMessageId = builder.getResentMessageId();
-		bodyText = builder.getBodyText();
-		bodyHtml = builder.getBodyHtml();
-		xHeaders = builder.getxHeaders();
+	private RequestMessage(RequestMessageBuilder builder) {
+		apiKey = builder.apiKey;
+		from = builder.from;
+		to = builder.to;
+		subject = builder.subject;
+		replyTo = builder.replyTo;
+		cc = builder.cc;
+		bcc = builder.bcc;
+		sender = builder.sender;
+		messageId = builder.messageId;
+		inReplyTo = builder.inReplyTo;
+		references = builder.references;
+		comments = builder.comments;
+		keywords = builder.keywords;
+		replyBy = builder.replyBy;
+		importance = builder.importance;
+		priority = builder.priority;
+		sensitivity = builder.sensitivity;
+		resentDate = builder.resentDate;
+		resentFrom = builder.resentFrom;
+		resentSender = builder.resentSender;
+		resentReplyTo = builder.resentReplyTo;
+		resentMessageId = builder.resentMessageId;
+		bodyText = builder.bodyText;
+		bodyHtml = builder.bodyHtml;
+		xHeaders = builder.xHeaders;
 	}
 
 	public String getApiKey() {
@@ -209,6 +191,164 @@ public class RequestMessage {
 
 	public String getxHeaders() {
 		return xHeaders;
+	}
+	
+	public static class RequestMessageBuilder {
+
+		private String apiKey;
+		private String from;
+		private String to;
+		private String subject;
+		private String replyTo;
+		private String cc;
+		private String bcc;
+		private String sender;
+		private String messageId;
+		private String inReplyTo;
+		private String references;
+		private String comments;
+		private String keywords;
+		private String replyBy;
+		private String importance;
+		private String priority;
+		private String sensitivity;
+		private String resentDate;
+		private String resentFrom;
+		private String resentSender;
+		private String resentReplyTo;
+		private String resentMessageId;
+		private String bodyText;
+		private String bodyHtml;
+		private String xHeaders;
+
+		public RequestMessage build() {
+			return new RequestMessage(this);
+		}
+
+		public RequestMessageBuilder apiKey(String apiKey) {
+			this.apiKey = apiKey;
+			return this;
+		}
+
+		public RequestMessageBuilder from(String from) {
+			this.from = from;
+			return this;
+		}
+
+		public RequestMessageBuilder to(String to) {
+			this.to = to;
+			return this;
+		}
+
+		public RequestMessageBuilder subject(String subject) {
+			this.subject = subject;
+			return this;
+		}
+
+		public RequestMessageBuilder replyTo(String replyTo) {
+			this.replyTo = replyTo;
+			return this;
+		}
+
+		public RequestMessageBuilder cc(String cc) {
+			this.cc = cc;
+			return this;
+		}
+
+		public RequestMessageBuilder bcc(String bcc) {
+			this.bcc = bcc;
+			return this;
+		}
+
+		public RequestMessageBuilder sender(String sender) {
+			this.sender = sender;
+			return this;
+		}
+
+		public RequestMessageBuilder messageId(String messageId) {
+			this.messageId = messageId;
+			return this;
+		}
+
+		public RequestMessageBuilder inReplyTo(String inReplyTo) {
+			this.inReplyTo = inReplyTo;
+			return this;
+		}
+
+		public RequestMessageBuilder references(String references) {
+			this.references = references;
+			return this;
+		}
+
+		public RequestMessageBuilder comments(String comments) {
+			this.comments = comments;
+			return this;
+		}
+
+		public RequestMessageBuilder keywords(String keywords) {
+			this.keywords = keywords;
+			return this;
+		}
+
+		public RequestMessageBuilder replyBy(String replyBy) {
+			this.replyBy = replyBy;
+			return this;
+		}
+
+		public RequestMessageBuilder importance(String importance) {
+			this.importance = importance;
+			return this;
+		}
+
+		public RequestMessageBuilder priority(String priority) {
+			this.priority = priority;
+			return this;
+		}
+
+		public RequestMessageBuilder sensitivity(String sensitivity) {
+			this.sensitivity = sensitivity;
+			return this;
+		}
+
+		public RequestMessageBuilder resentDate(String resentDate) {
+			this.resentDate = resentDate;
+			return this;
+		}
+
+		public RequestMessageBuilder resentFrom(String resentFrom) {
+			this.resentFrom = resentFrom;
+			return this;
+		}
+
+		public RequestMessageBuilder resentSender(String resentSender) {
+			this.resentSender = resentSender;
+			return this;
+		}
+
+		public RequestMessageBuilder resentReplyTo(String resentReplyTo) {
+			this.resentReplyTo = resentReplyTo;
+			return this;
+		}
+
+		public RequestMessageBuilder resentMessageId(String resentMessageId) {
+			this.resentMessageId = resentMessageId;
+			return this;
+		}
+
+		public RequestMessageBuilder bodyText(String bodyText) {
+			this.bodyText = bodyText;
+			return this;
+		}
+
+		public RequestMessageBuilder bodyHtml(String bodyHtml) {
+			this.bodyHtml = bodyHtml;
+			return this;
+		}
+
+		public RequestMessageBuilder xHeaders(String xHeaders) {
+			this.xHeaders = xHeaders;
+			return this;
+		}
 	}
 
 }

@@ -3,7 +3,6 @@ package com.dyn.api.dw.resources;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
-import javax.validation.Valid;
 import javax.validation.Validator;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -33,7 +32,7 @@ public class SendMessageResource {
 	}
 
 	@POST
-	public ResponseMessage send(@QueryBeanParam @Valid RequestMessage message) {
+	public ResponseMessage send(@QueryBeanParam RequestMessage message) {
 		Set<ConstraintViolation<RequestMessage>> validate = validator.validate(message);
 		System.out.println(validate);
 		return new ResponseMessage(1, message.getApiKey(), message.getSubject());
