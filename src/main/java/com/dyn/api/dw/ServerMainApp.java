@@ -1,12 +1,14 @@
 package com.dyn.api.dw;
 
-import com.dyn.api.dw.config.ApplicationConfig;
-import com.dyn.api.dw.health.SMTPConfigHealthCheck;
-import com.dyn.api.dw.resources.SendMessageResource;
-
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+
+import com.dyn.api.dw.config.ApplicationConfig;
+import com.dyn.api.dw.health.SMTPConfigHealthCheck;
+import com.dyn.api.dw.provider.RequestMessageBeanProvider;
+import com.dyn.api.dw.resources.SendMessageResource;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 /**
  * Created by rsmirnov on 8/27/14.
@@ -30,9 +32,14 @@ public class ServerMainApp extends Application<ApplicationConfig> {
                 new SMTPConfigHealthCheck(applicationConfig.getSmtpHost());
         environment.healthChecks().register("smtp", smtpCheck);
         
-        final SendMessageResource resource = new SendMessageResource();
+        final SendMessageResource resource = new SendMessageResource(environment.getValidator());
         
         environment.jersey().register(resource);
+        
+        environment.getObjectMapper().configure(SerializationFeature.WRAP_ROOT_VALUE, true);
+        
+        environment.jersey().register(RequestMessageBeanProvider.class);
+        
     }
 
     public static void main(String[] args) throws Exception {
