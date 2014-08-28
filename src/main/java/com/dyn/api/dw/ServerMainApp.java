@@ -6,6 +6,7 @@ import io.dropwizard.setup.Environment;
 
 import com.dyn.api.dw.config.ApplicationConfig;
 import com.dyn.api.dw.health.SMTPConfigHealthCheck;
+import com.dyn.api.dw.provider.RequestMessageBeanProvider;
 import com.dyn.api.dw.resources.SendMessageResource;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -31,11 +32,14 @@ public class ServerMainApp extends Application<ApplicationConfig> {
                 new SMTPConfigHealthCheck(applicationConfig.getSmtpHost());
         environment.healthChecks().register("smtp", smtpCheck);
         
-        final SendMessageResource resource = new SendMessageResource();
+        final SendMessageResource resource = new SendMessageResource(environment.getValidator());
         
         environment.jersey().register(resource);
         
         environment.getObjectMapper().configure(SerializationFeature.WRAP_ROOT_VALUE, true);
+        
+        environment.jersey().register(RequestMessageBeanProvider.class);
+        
     }
 
     public static void main(String[] args) throws Exception {
