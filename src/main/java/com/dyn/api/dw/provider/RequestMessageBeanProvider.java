@@ -8,7 +8,6 @@ import javax.ws.rs.core.UriInfo;
 
 import com.dyn.api.dw.annotation.QueryBeanParam;
 import com.dyn.api.dw.api.RequestMessage;
-import com.dyn.api.dw.api.RequestMessageBuilder;
 import com.sun.jersey.api.model.Parameter;
 import com.sun.jersey.core.spi.component.ComponentContext;
 import com.sun.jersey.core.spi.component.ComponentScope;
@@ -16,7 +15,36 @@ import com.sun.jersey.spi.inject.Injectable;
 import com.sun.jersey.spi.inject.InjectableProvider;
 
 public class RequestMessageBeanProvider implements InjectableProvider<QueryBeanParam, Parameter> {
+	
+	private interface RequestParameter {
+		String X_HEADERS = "xheaders";
+		String BODY_HTML = "bodyhtml";
+		String BODY_TEXT = "bodytext";
+		String RESENT_MESSAGE_ID = "resent-messageid";
+		String RESENT_REPLY_TO = "resent-replyto";
+		String RESENT_SENDER = "resent-sender";
+		String RESENT_FROM = "resent-from";
+		String RESENT_DATE = "resent-date";
+		String SENSITIVITY = "sensitivity";
+		String PRIORITY = "priority";
+		String IMPORTANCE = "importance";
+		String REPLY_BY = "replyby";
+		String KEYWORDS = "keywords";
+		String COMMENTS = "comments";
+		String REFERENCES = "references";
+		String IN_REPLY_TO = "inreplyto";
+		String MESSAGE_ID = "messageid";
+		String SENDER = "sender";
+		String BCC = "bcc";
+		String CC = "cc";
+		String REPLY_TO = "replyto";
+		String SUBJECT = "subject";
+		String TO = "to";
+		String FROM = "from";
+		String API_KEY = "apikey";
+	}
 
+	
 	@Context
 	private UriInfo uriInfo;
 
@@ -30,36 +58,36 @@ public class RequestMessageBeanProvider implements InjectableProvider<QueryBeanP
 		return new Injectable<RequestMessage>() {
 
 			public RequestMessage getValue() {
-				RequestMessageBuilder bean = new RequestMessageBuilder();
+				RequestMessage.RequestMessageBuilder bean = new RequestMessage.RequestMessageBuilder();
 				MultivaluedMap<String, String> params = uriInfo.getQueryParameters();
 
 				// TODO is there a better way to do this?
 
-				bean.setApiKey(getParameter(params, "apikey"));
-				bean.setFrom(getParameter(params, "from"));
-				bean.setTo(getParameter(params, "to"));
-				bean.setSubject(getParameter(params, "subject"));
-				bean.setReplyTo(getParameter(params, "replyto"));
-				bean.setCc(getParameter(params, "cc"));
-				bean.setBcc(getParameter(params, "bcc"));
-				bean.setSender(getParameter(params, "sender"));
-				bean.setMessageId(getParameter(params, "messageid"));
-				bean.setInReplyTo(getParameter(params, "inreplyto"));
-				bean.setReferences(getParameter(params, "references"));
-				bean.setComments(getParameter(params, "comments"));
-				bean.setKeywords(getParameter(params, "keywords"));
-				bean.setReplyBy(getParameter(params, "replyby"));
-				bean.setImportance(getParameter(params, "importance"));
-				bean.setPriority(getParameter(params, "priority"));
-				bean.setSensitivity(getParameter(params, "sensitivity"));
-				bean.setResentDate(getParameter(params, "resent-date"));
-				bean.setResentFrom(getParameter(params, "resent-from"));
-				bean.setResentSender(getParameter(params, "resent-sender"));
-				bean.setResentReplyTo(getParameter(params, "resent-replyto"));
-				bean.setResentMessageId(getParameter(params, "resent-messageid"));
-				bean.setBodyText(getParameter(params, "bodytext"));
-				bean.setBodyHtml(getParameter(params, "bodyhtml"));
-				bean.setxHeaders(getParameter(params, "xheaders"));
+				bean.apiKey(getParameter(params, RequestParameter.API_KEY))
+						.from(getParameter(params, RequestParameter.FROM))
+						.to(getParameter(params, RequestParameter.TO))
+						.subject(getParameter(params, RequestParameter.SUBJECT))
+						.replyTo(getParameter(params, RequestParameter.REPLY_TO))
+						.cc(getParameter(params, RequestParameter.CC))
+						.bcc(getParameter(params, RequestParameter.BCC))
+						.sender(getParameter(params, RequestParameter.SENDER))
+						.messageId(getParameter(params, RequestParameter.MESSAGE_ID))
+						.inReplyTo(getParameter(params, RequestParameter.IN_REPLY_TO))
+						.references(getParameter(params, RequestParameter.REFERENCES))
+						.comments(getParameter(params, RequestParameter.COMMENTS))
+						.keywords(getParameter(params, RequestParameter.KEYWORDS))
+						.replyBy(getParameter(params, RequestParameter.REPLY_BY))
+						.importance(getParameter(params, RequestParameter.IMPORTANCE))
+						.priority(getParameter(params, RequestParameter.PRIORITY))
+						.sensitivity(getParameter(params, RequestParameter.SENSITIVITY))
+						.resentDate(getParameter(params, RequestParameter.RESENT_DATE))
+						.resentFrom(getParameter(params, RequestParameter.RESENT_FROM))
+						.resentSender(getParameter(params, RequestParameter.RESENT_SENDER))
+						.resentReplyTo(getParameter(params, RequestParameter.RESENT_REPLY_TO))
+						.resentMessageId(getParameter(params, RequestParameter.RESENT_MESSAGE_ID))
+						.bodyText(getParameter(params, RequestParameter.BODY_TEXT))
+						.bodyHtml(getParameter(params, RequestParameter.BODY_HTML))
+						.xHeaders(getParameter(params, RequestParameter.X_HEADERS));
 
 				return bean.build();
 			}
