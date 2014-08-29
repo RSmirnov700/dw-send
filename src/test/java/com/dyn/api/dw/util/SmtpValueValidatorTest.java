@@ -16,6 +16,13 @@ public class SmtpValueValidatorTest {
             "1.1.1.","10.280.13.50","400.168.1.1","10.10.1",
             "132.abc.111.10","26", "127.0.0.-1"});
 
+    private static final List<String> validDomainNames = Arrays.asList(new String[] {
+            "smtp.somewhere.com","dyn.com","adidas.co.uk","some.cn",
+            "st9.go.com"});
+
+    private static final List<String> invalidDomainNames = Arrays.asList(new String[] {
+            "smtp.somewhere.","some",".adidas.co.uk","so\\me.com"});
+
     private static SmtpValueValidator validator;
 
 
@@ -28,14 +35,30 @@ public class SmtpValueValidatorTest {
     @Test
     public void testValidIPs() {
         for(String validIp : validIpAddresses) {
-            Assert.assertEquals(true, validator.validate(validIp));
+            Assert.assertEquals("IP " + validIp + "expected to be valid", true, validator.validate(validIp));
         }
     }
 
     @Test
     public void testInValidIPs() {
         for(String invalidIp : invalidIpAddresses) {
-            Assert.assertEquals(false, validator.validate(invalidIp));
+            Assert.assertEquals("IP " + invalidIpAddresses + "expected to be invalid", false, validator.validate(invalidIp));
         }
     }
-}
+
+    @Test
+    public void testValidDomains() {
+        for(String validDomain :validDomainNames) {
+            Assert.assertEquals("Domain " + validDomain + " expected to be valid", true, validator.validate(validDomain));
+        }
+    }
+
+    @Test
+    public void testInvalidDomains() {
+        for(String invalidDomain : invalidDomainNames) {
+            Assert.assertEquals("Domain " + invalidDomain + " expected to be invalid",
+                    false, validator.validate(invalidDomain));
+        }
+    }
+
+ }
