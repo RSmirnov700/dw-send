@@ -61,7 +61,7 @@ public class MailSenderImpl implements MailSender {
         msg.setSentDate(new Date());
 
         MimeBodyPart messageBodyPart = new MimeBodyPart();
-        messageBodyPart.setContent(emailContent.getMessage(), "text/html");
+        messageBodyPart.setContent(emailContent.getMessage(), emailContent.getType().getIsoType());
 
         Multipart multipart = new MimeMultipart();
         multipart.addBodyPart(messageBodyPart);
