@@ -7,6 +7,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.dyn.api.dw.core.mail.EmailContent;
+import com.dyn.api.dw.core.mail.MailSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,9 +25,12 @@ public class SendMessageResource {
 
 	private RequestMessageValidator validator;
 
+    private MailSender mailSender;
+
     @Inject
-	public SendMessageResource (RequestMessageValidator validator) {
+	public SendMessageResource (RequestMessageValidator validator, MailSender mailSender) {
 		this.validator = validator;
+        this.mailSender = mailSender;
         LOG.info("Injected Validator is " + validator);
 	}
 
@@ -34,8 +39,12 @@ public class SendMessageResource {
 		if (!validator.isValid(message)) {
 			return new ResponseMessage(RequestMessageValidator.INVALID_FIELD_ERROR_CODE, "KO", validator.createErrorMessage(message));
 		}
-		
-		return new ResponseMessage(200, "OK", new Date().toString() + " " + message.getSubject());
+        try {
+            mailSender.send(new EmailContent());
+        } catch (Exception e) {
+            new ResponseMessage(200, "OK", "Error occurred while sending email" + e.getMessage());
+        }
+        return new ResponseMessage(200, "OK", new Date().toString() + " " + message.getSubject());
 	}
 
 }
