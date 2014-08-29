@@ -1,1 +1,4 @@
 smtpHost: smtp.somewhere.com
+smtpPort: 25
+smtpUsername: auser
+smtpPassword: password

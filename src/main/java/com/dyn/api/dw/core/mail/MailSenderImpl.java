@@ -1,6 +1,8 @@
 package com.dyn.api.dw.core.mail;
 
+import com.dyn.api.dw.config.ApplicationConfig;
 import com.google.common.collect.Lists;
+import com.google.inject.Inject;
 
 import javax.activation.DataHandler;
 import javax.mail.*;
@@ -17,11 +19,12 @@ public class MailSenderImpl implements MailSender {
     private final String username;
     private final String password;
 
-    public MailSenderImpl(String smtpHost, String smtpPort, String username, String password) {
-        this.smtpHost = smtpHost;
-        this.smtpPort = smtpPort;
-        this.username = username;
-        this.password = password;
+    @Inject
+    public MailSenderImpl(ApplicationConfig applicationConfig) {
+        this.smtpHost = applicationConfig.getSmtpHost();
+        this.smtpPort = applicationConfig.getSmtpPort();
+        this.username = applicationConfig.getSmtpUsername();
+        this.password = applicationConfig.getSmtpPassword();
     }
 
     private List<InternetAddress> parseAddresses(List<String> addresses) throws AddressException {
